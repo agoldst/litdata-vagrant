@@ -7,10 +7,10 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Set up the box
     config.vm.box = "precise"
-	config.vm.provider "virtualbox" do |v|
-	  v.memory = 2048
-	  v.cpus = 2
-	end
+    config.vm.provider "virtualbox" do |v|
+      v.memory = 2048
+      v.cpus = 2
+    end
     # If box does not exist fetch it from this url
     config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
@@ -23,10 +23,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.synced_folder  "srv", "/srv/shiny-server", create:true
     # add dummy to avoid "Could not retrieve fact fqdn"
     config.vm.hostname = "vagrant.example.com"
-   
+
    # Provisioning
     config.vm.provision :puppet,
 #    :options => ["--verbose", "--debug"] do |puppet|
+#    :options => ["--debug"] do |puppet|
     :options => [] do |puppet|
         puppet.manifests_path = "puppet/manifests"
         puppet.manifest_file = "rstudio-shiny-server.pp"

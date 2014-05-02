@@ -31,6 +31,10 @@ class update_system {
         ensure => present,
     }
 
+    # Install gdebi
+    package{'gdebi-core':
+        ensure => present,
+    }
 
     # for RCurl
     package{'libcurl4-gnutls-dev':
@@ -78,16 +82,11 @@ class install_shiny_server {
         command  => $getshiny
     }
 
-    # Install gdebi
-    package{'gdebi-core':
-        ensure => present,
-    }
-
     # Install shiny server
     exec {'shiny-server-install':
         provider => shell,
-        require  => Package['gdebi-core'],
-        command  => 'gdebi -n shiny-server-1.1.0.10000-amd64.deb',
+        require  => [Package['gdebi-core'], Exec['shiny-server-download']],
+        command  => "gdebi -n ${shinyserver}",
     }
 
     # Create shiny system user
