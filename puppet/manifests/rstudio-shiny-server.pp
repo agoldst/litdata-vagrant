@@ -10,6 +10,16 @@ $getshiny = "wget -nc http://download3.rstudio.org/ubuntu-12.04/x86_64/${shinyse
 
 # Update system for r install
 class update_system {
+# There is a major issue with synced folders in VM 4.3.10.
+# http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest
+# https://github.com/mitchellh/vagrant/issues/3341
+# !!!! Remove this with versions other than 4.3.10
+# Might require a reload 
+    exec {'bugfix4-3-10':
+        provider => shell,
+        command => "ln -sFf /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions"
+    }
+    
     exec {'apt_update':
         provider => shell,
         command  => 'apt-get update;',
@@ -20,11 +30,6 @@ class update_system {
               'python', 'g++', 'make']:
       ensure  => present,
       require => Exec['apt_update'],
-    }
-
-    # Install host additions/
-    package {'dkms':
-        ensure => present,
     }
 
     package{'default-jdk':
@@ -49,13 +54,25 @@ class update_system {
       apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9;
       apt-get update;',
     }
+    exec {'upgrade-system':
+      require  => Exec['add-cran-repository'],
+      provider => shell,
+      command  =>'apt-get -y upgrade',
+    }
+
+    # Install host additions (following https://www.virtualbox.org/manual/ch04.html
+    # this must be done after upgrading.
+    package {'dkms':
+        ensure => present,
+        require =>Exec['upgrade-system'],
+    }
 }
 
 # Install r base and packages
 class install_r {
     package {'r-base':
       ensure  => present,
-      require => Exec['add-cran-repository'],
+      require => [Package['dkms','default-jdk','gdebi-core','libcurl4-gnutls-dev']],
     }
     package {'r-base-dev':
       ensure  => present,
@@ -89,17 +106,13 @@ class install_shiny_server {
         command  => "gdebi -n ${shinyserver}",
     }
 
-    # Create shiny system user
-    user {'shiny':
-        ensure  => present,
-        require => Exec['shiny-server-install'],
-        shell   => '/bin/bash',
-        name    => 'shiny',
-    }
 
-    # Create necessary directories
+    # Copy example shiny files
     file {'/var/shiny-server':
-        ensure => 'directory',
+        source  => '/usr/local/lib/R/site-library/shiny/examples',
+        owner   => 'shiny',
+        ensure  => 'directory',
+        recurse => true,
     }
 
     file {'/var/shiny-server/www':
@@ -111,6 +124,17 @@ class install_shiny_server {
         ensure  => 'directory',
         require => File['/var/shiny-server'],
     }
+
+    # Create shiny system user
+    user {'shiny':
+        ensure  => present,
+        require => [Exec['shiny-server-install'],File['/var/shiny-server']],
+        password=> sha1('shiny'),
+        shell   => '/bin/bash',
+        name    => 'shiny',
+        home    => '/var/shiny-server',
+    }
+ 
 
 }
 

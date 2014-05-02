@@ -4,6 +4,14 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+# There is a major issue with synced folders in VM 4.3.10.
+# http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest
+# https://github.com/mitchellh/vagrant/issues/3341
+# This requires manual 
+# vagrant up 
+# vagrant ssh -c 'sudo ln -s /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions'
+# vagrant reload
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Set up the box
     config.vm.box = "precise"
@@ -20,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network "forwarded_port", guest: 8787, host: 8787
 
     config.vm.synced_folder  "etc", "/etc/shiny-server", create:true
-    config.vm.synced_folder  "srv", "/srv/shiny-server", create:true
+    config.vm.synced_folder  "shiny-server", "/var/shiny-server", create:true
     # add dummy to avoid "Could not retrieve fact fqdn"
     config.vm.hostname = "vagrant.example.com"
 
