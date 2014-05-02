@@ -10,15 +10,6 @@ $getshiny = "wget -nc http://download3.rstudio.org/ubuntu-12.04/x86_64/${shinyse
 
 # Update system for r install
 class update_system {
-# There is a major issue with synced folders in VM 4.3.10.
-# http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest
-# https://github.com/mitchellh/vagrant/issues/3341
-# !!!! Remove this with versions other than 4.3.10
-# Might require a reload 
-    exec {'bugfix4-3-10':
-        provider => shell,
-        command => "ln -sFf /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions"
-    }
     
     exec {'apt_update':
         provider => shell,
@@ -27,7 +18,7 @@ class update_system {
 
     package {['software-properties-common',
               'python-software-properties',
-              'python', 'g++', 'make']:
+              'python', 'g++', 'make','vim']:
       ensure  => present,
       require => Exec['apt_update'],
     }
@@ -108,34 +99,31 @@ class install_shiny_server {
 
 
     # Copy example shiny files
-    file {'/var/shiny-server':
+    file {'/srv/shiny-server':
         source  => '/usr/local/lib/R/site-library/shiny/examples',
         owner   => 'shiny',
         ensure  => 'directory',
+        require => Exec['shiny-server-install'],
         recurse => true,
     }
 
-    file {'/var/shiny-server/www':
-        ensure  => 'directory',
-        require => File['/var/shiny-server'],
-    }
-
-    file {'/var/shiny-server/log':
-        ensure  => 'directory',
-        require => File['/var/shiny-server'],
-    }
-
-    # Create shiny system user
+    
+    
+    # Create shiny system user, with password shiny
+    $password = "$6$bPJUsAOs$OLKzO/x8FrsLI.9Im5bk1Csqizr3hr1AR.QLILUZmCFgLrp68r7hxaP0kCh3k3cl2FPvgjIfYHUabBypuFzdb1"
     user {'shiny':
         ensure  => present,
-        require => [Exec['shiny-server-install'],File['/var/shiny-server']],
-        password=> sha1('shiny'),
+        require => [Exec['shiny-server-install'],File['/srv/shiny-server']],
+        password => $password,
         shell   => '/bin/bash',
         name    => 'shiny',
-        home    => '/var/shiny-server',
+        home    => '/srv/shiny-server',
     }
- 
-
+    # Remove standard app
+    file {'/srv/shiny-server/index.html':
+        require => User['shiny'],
+        ensure => absent,
+    } 
 }
 
 # install rstudio and start service

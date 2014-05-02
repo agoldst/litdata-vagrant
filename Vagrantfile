@@ -4,13 +4,10 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
-# There is a major issue with synced folders in VM 4.3.10.
+# There is a major issue with synced folders in Virtual Box 4.3.10.
+# DO NOT USE THIS version
 # http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest
 # https://github.com/mitchellh/vagrant/issues/3341
-# This requires manual 
-# vagrant up 
-# vagrant ssh -c 'sudo ln -s /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions'
-# vagrant reload
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Set up the box
