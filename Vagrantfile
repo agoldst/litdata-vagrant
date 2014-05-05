@@ -24,7 +24,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # RStudio
     config.vm.network "forwarded_port", guest: 8787, host: 8787
 
-    config.vm.synced_folder  "etc", "/etc/shiny-server", create:true
+    config.vm.synced_folder  "etc/rstudio", "/etc/rstudio", create:true
+    config.vm.synced_folder  "etc/shiny-server", "/etc/shiny-server", create:true
     config.vm.synced_folder  "shiny-server", "/var/shiny-server", create:true
     # add dummy to avoid "Could not retrieve fact fqdn"
     config.vm.hostname = "vagrant.example.com"

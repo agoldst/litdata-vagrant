@@ -22,12 +22,13 @@ Installation Instructions
 
 All commands starting with _vagrant_ should be given on the command line (i.e. the _black box_ in Windows).  If the command `vagrant` fails, please add the path to the directory with `vagrant.exe` to the  PATH environment variable.
 
-This installation has been tested with Oracle VirtualBox, version 4.3.8 on a Windows 7/64 host; and Vagrant 1.5.4. Note that this is NOT the current version. There is a major issue with synced folders in Virtual Box 4.3.10; __do not use this version__. I will update this file when 4.3.11. is out and hopefully debugged. See  [here](http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest) and [here](https://github.com/mitchellh/vagrant/issues/3341).
+This installation has been tested with Oracle VirtualBox, version 4.3.8 on a Windows 7/64 host; and Vagrant 1.5.4. Note that this is NOT the current version of VirtualBox. There is a major issue with synced folders in Virtual Box 4.3.10; __do not use this version__. I will update this file when 4.3.11. is out and hopefully debugged. See  [here](http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest) and [here](https://github.com/mitchellh/vagrant/issues/3341).
 
 
 * Install [Oracle Virtual Box](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3). __Use version 4.3.8__, not the current version 4.3.10.
 * Install [Vagrant](http://www.vagrantup.com/downloads.html); best install it into folder `D:\vagrant` or `C:\vagrant` to avoid the `HashiCorp`-super-folder. 
 * Open a Command Window in the repository folder, e.g `cd \vagrant\rstudio-shiny-server-on-ubuntu`; this is the folder that contains a file named `Vagrantfile`.
+* Optional: If you want to create snapshots of your virtual machine, install the plugin: `plugin install vagrant-vbox-snapshot`.
 * Install Virtual Box Guest Additions: `vagrant plugin install vagrant-vbguest`; this step is tricky, please consult [vbguest](https://github.com/dotless-de/vagrant-vbguest) in case of errors. If everything fails, install the guest additions manually.
 * If you have `git` installed, clone the project: `git clone git@bitbucket.org:dmenne/rstudio-shiny-server-on-ubuntu.git`
 * If you do not have `git` installed, [download the zip file](https://bitbucket.org/dmenne/rstudio-shiny-server-on-ubuntu/downloads/rstudio-shiny-server-on-ubuntu.zip) and unzip it into the vagrant directory. Note that the zip file may be a few revisions behind.
@@ -41,10 +42,11 @@ in file `Vagrantfile` by removing the `#`and prepending a `# to `:options => [] 
 * The important information controlling the installation is in file `Vagrantfile`, `usefulpackages.R`, and `puppet/manifests/rstudio-shiny-server.pp`.
 * If you want to map additional directories to your Windows host, add lines following the pattern `config.vm.synced_folder  "etc", "/etc/shiny-server", create:true` to `Vagrantfile`, and do a `vagrant reload`.
 * If you want additional R-packages installed, add these to the list in `usefulpackages.R`; do not forget to make a copy of the changes, this file will be overridden when you update to a more recent version of  `rstudio-shiny-server-on-ubuntu`.
-* Check the top lines in `puppet/manifests/rstudio-shiny-server.pp`
+* Check the top lines in `puppet/manifests/rstudio-shiny-server.pp` if you want to change the installed server versions.
 * The default installation gives 2048MB memory to the VM. This might be too much, so check the line `v.memory = 2048` in `Vagrantfile`
 * It is not necessary to keept the "black box" open to run the server. The system can run totally in the background.
 * Once everything works ok, you can start and stop the Virtual Box system in your Oracle VM Virtual Box manager; use `rstudio-shiny-server-on-ubuntu_default`. Only use `vagrant reload` when you have changed settings.
+* You can take a snapshot with `vagrant snapshot take <name>`, vagrant snapshot list to list them, and `vagrant snapshot go <name>` to restore a snapshot.
 
 Running Shiny 
 -------------

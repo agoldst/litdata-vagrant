@@ -17,8 +17,8 @@ class update_system {
     }
 
     package {['software-properties-common',
-              'python-software-properties',
-              'python', 'g++', 'make','vim']:
+              'python-software-properties', 
+              'python', 'g++', 'make','vim', 'whois']:
       ensure  => present,
       require => Exec['apt_update'],
     }
@@ -107,23 +107,35 @@ class install_shiny_server {
         recurse => true,
     }
 
-    
-    
-    # Create shiny system user, with password shiny
-    $password = "$6$bPJUsAOs$OLKzO/x8FrsLI.9Im5bk1Csqizr3hr1AR.QLILUZmCFgLrp68r7hxaP0kCh3k3cl2FPvgjIfYHUabBypuFzdb1"
-    user {'shiny':
-        ensure  => present,
-        require => [Exec['shiny-server-install'],File['/srv/shiny-server']],
-        password => $password,
-        shell   => '/bin/bash',
-        name    => 'shiny',
-        home    => '/srv/shiny-server',
-    }
     # Remove standard app
     file {'/srv/shiny-server/index.html':
-        require => User['shiny'],
+        require => File['/srv/shiny-server'],
         ensure => absent,
     } 
+
+    # Create rstudio_users group
+    group {'rstudio_users':
+        ensure => present,
+        require => File['/srv/shiny-server'],
+    }
+
+  # http://www.pindi.us/blog/getting-started-puppet
+    user {'shiny':
+        ensure  => present,
+        require => [Exec['shiny-server-install'],File['/srv/shiny-server'],
+                    Group['rstudio_users']],
+        groups   => ['rstudio_users'],
+        shell   => '/bin/bash',
+        managehome => true,
+        name    => 'shiny',
+        home    => '/srv/shiny-server',
+    }   
+   # Setting password during user creation does not work    
+   exec {'shinypassword':
+        require => User['shiny'],
+        provider => shell,
+        command => 'usermod -p `mkpasswd -H md5 shiny` shiny',
+     }
 }
 
 # install rstudio and start service
