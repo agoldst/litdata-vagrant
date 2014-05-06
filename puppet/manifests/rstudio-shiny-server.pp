@@ -1,9 +1,11 @@
 include wget
 
 # Change these if the version changes
+# See http://www.rstudio.com/ide/download/server
 $rstudioserver = 'rstudio-server-0.98.507-amd64.deb'
 $getrstudio = "wget -nc http://download2.rstudio.org/${rstudioserver}"
 
+# See http://www.rstudio.com/shiny/server/install-opensource
 $shinyserver = 'shiny-server-1.1.0.10000-amd64.deb'
 $getshiny = "wget -nc http://download3.rstudio.org/ubuntu-12.04/x86_64/${shinyserver}"
 
