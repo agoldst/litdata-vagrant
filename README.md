@@ -46,7 +46,7 @@ in file `Vagrantfile` by removing the `#`and prepending a `# to `:options => [] 
 * The default installation gives 2048MB memory to the VM. This might be too much, forcing smaller host systems to a crawl, so check the line `v.memory = 2048` in `Vagrantfile`
 * It is not necessary to keept the "black box" open to run the server. The system can run totally in the background.
 * Once everything works ok, you can start and stop the Virtual Box system in your Oracle VM Virtual Box manager; use `rstudio-shiny-server-on-ubuntu_default`. Only use `vagrant reload` when you have changed settings.
-* You can take a snapshot with `vagrant snapshot take <name>`, `vagrant snapshot list` to list them, and `vagrant snapshot go <name>` to restore a snapshot.
+* When you have in installed the optional snapshot plugin (see above), you can take a snapshot with `vagrant snapshot take <name>`, `vagrant snapshot list` to list them, and `vagrant snapshot go <name>` to restore a snapshot.
 
 Running Shiny 
 -------------
