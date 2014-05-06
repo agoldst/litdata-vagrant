@@ -22,7 +22,7 @@ Installation Instructions
 
 All commands starting with _vagrant_ should be given on the command line (i.e. the _black box_ in Windows).  If the command `vagrant` fails, please add the path to the directory with `vagrant.exe` to the  PATH environment variable.
 
-This installation has been tested with Oracle VirtualBox, version 4.3.8 on a Windows 7/64 host; and Vagrant 1.5.4. Note that this is NOT the current version of VirtualBox. There is a major issue with synced folders in Virtual Box 4.3.10; see  [here](http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest) and [here](https://github.com/mitchellh/vagrant/issues/3341); __do not use this version__. I will update this file when 4.3.11. is out and hopefully debugged. .
+This installation has been tested with Oracle VirtualBox, version 4.3.8 on a Windows 7/64 host; and Vagrant 1.5.4. Note that this is NOT the current version of VirtualBox. There is a major issue with synchronized folders in Virtual Box 4.3.10; see  [here](http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest) and [here](https://github.com/mitchellh/vagrant/issues/3341); __do not use this version__. I will update this file when 4.3.11. is out and hopefully debugged. .
 
 
 * Install [Oracle Virtual Box](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3). __Use version 4.3.8__, not the current version 4.3.10.
