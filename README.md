@@ -33,6 +33,24 @@ This installation has been tested with Oracle VirtualBox, version 4.3.8 on a Win
 * When you have `git` installed, clone the project: `git clone git@bitbucket.org:dmenne/rstudio-shiny-server-on-ubuntu.git`
 * When you do not have `git` installed, [download the zip file](https://bitbucket.org/dmenne/rstudio-shiny-server-on-ubuntu/downloads/rstudio-shiny-server-on-ubuntu.zip) and unzip it into the vagrant directory. Note that the zip file may be a few revisions behind.
 * Run: `vagrant up` from the command line in this directory; this will need some time on the first start, because all packages are downloaded. Come back after an hour or a night.
+* If there are no errors, continue running Shiny or RStudio. If there are errors, read below "Troubleshooting and additional info"
+
+
+Running Shiny 
+-------------
+
+* In your browser, use `localhost:3838` to connect to the shiny servers. To edit your shiny project, use the mapped folder in `vagrant\rstudio-shiny-server-on-ubuntu\srv`; you do not have to do any work in the Ubuntu-box.
+* You can connect to shiny in your network, if the port 3838 is open. See the RStudio server installation instructions how to change the port.
+
+
+Running RStudio
+-------------
+
+* In your browser, use `localhost:8787` to connect to RStudio.  The user name is `shiny` and the password is also `shiny`. Your home directory map to `vagrant\rstudio-shiny-server-on-ubuntu\srv` in the host operating system (assumed Windows).
+
+Troubleshooting and additional info
+------------------------------------
+
 * If you see error messages, try again: `vagrant reload` and/or `vagrant provision`.  
 * When in doubt run: `vagrant destroy` followed by  `vagrant up`.
 * To connect to the Ubuntu system, use `vagrant ssh`;no password required. This is an insecure connection, intended to be used on a local machine only.
@@ -48,16 +66,7 @@ in file `Vagrantfile` by removing the `#`and prepending a `# to `:options => [] 
 * Once everything works ok, you can start and stop the Virtual Box system in your Oracle VM Virtual Box manager; use `rstudio-shiny-server-on-ubuntu_default`. Only use `vagrant reload` when you have changed settings.
 * When you have in installed the optional snapshot plugin (see above), you can take a snapshot with `vagrant snapshot take <name>`, `vagrant snapshot list` to list them, and `vagrant snapshot go <name>` to restore a snapshot.
 
-Running Shiny 
--------------
-
-* In your browser, use `localhost:3838` to connect to the shiny servers. To edit your shiny project, use the mapped folder in `vagrant\rstudio-shiny-server-on-ubuntu\srv`; you do not have to do any work in the Ubuntu-box.
-
-Running RStudio
--------------
-
-* In your browser, use `localhost:8787` to connect to RStudio.  The user name is `shiny` and the password is also `shiny`. Your home directory map to `vagrant\rstudio-shiny-server-on-ubuntu\srv` in the host operating system (assumed Windows).
-
-- A tutorial to get to know [Vagrant](http://docs.vagrantup.com/v1/docs/getting-started/index.html)
-- For a reference visit [Puppet](https://puppetlabs.com/)
-
+More 
+------
+* A tutorial to get to know [Vagrant](http://docs.vagrantup.com/v1/docs/getting-started/index.html)
+* For a reference visit [Puppet](https://puppetlabs.com/)
