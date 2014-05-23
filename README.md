@@ -27,11 +27,12 @@ This installation has been tested with Oracle VirtualBox, version 4.3.8 on a Win
 
 * Install [Oracle Virtual Box](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3). __Use version 4.3.8__, not the current version 4.3.10.
 * Install [Vagrant](http://www.vagrantup.com/downloads.html); best install it into folder `D:\vagrant` or `C:\vagrant` to avoid the `HashiCorp`-super-folder. 
-* Open a Command Window in the repository folder, e.g `cd \vagrant\rstudio-shiny-server-on-ubuntu`; this is the folder that contains a file named `Vagrantfile`.
 * Optional: If you want to create snapshots of your virtual machine, install the plugin: `vagrant plugin install vagrant-vbox-snapshot`.
 * Install Virtual Box Guest Additions: `vagrant plugin install vagrant-vbguest`; this step is tricky, please consult [vbguest](https://github.com/dotless-de/vagrant-vbguest) in case of errors. If everything fails, install the guest additions manually.
-* When you have `git` installed, clone the project: `git clone git@bitbucket.org:dmenne/rstudio-shiny-server-on-ubuntu.git`
-* When you do not have `git` installed, [download the zip file](https://bitbucket.org/dmenne/rstudio-shiny-server-on-ubuntu/downloads/rstudio-shiny-server-on-ubuntu.zip) and unzip it into the vagrant directory. Note that the zip file may be a few revisions behind.
+* Create a subfolder of `\vagrant`; we assumed it is called `\vagrant\rstudio-shiny-server-on-ubuntu`, but you can choose any name you like.
+* When you have `git` installed, clone the project into this subfolder: `git clone git@bitbucket.org:dmenne/rstudio-shiny-server-on-ubuntu.git`.
+* When you do not have `git` installed, [download the zip file](https://bitbucket.org/dmenne/rstudio-shiny-server-on-ubuntu/downloads/rstudio-shiny-server-on-ubuntu.zip) and unzip it into the `\vagrant\rstudio-shiny-server-on-ubuntu` directory. Note that the zip file may be a few revisions behind the git version.
+* Open a Command Window in the repository folder, e.g `cd \vagrant\rstudio-shiny-server-on-ubuntu`; this is the folder that contains a file named `Vagrantfile`.
 * Run: `vagrant up` from the command line in this directory; this will need some time on the first start, because all packages are downloaded. Come back after an hour or a night.
 * If there are no errors, continue running Shiny or RStudio. If there are errors, read below "Troubleshooting and additional info"
 
