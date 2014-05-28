@@ -40,14 +40,14 @@ This installation has been tested with Oracle VirtualBox, version 4.3.8 on a Win
 Running Shiny 
 -------------
 
-* In your browser, use `localhost:3838` to connect to the shiny servers. To edit your shiny project, use the mapped folder in `vagrant\rstudio-shiny-server-on-ubuntu\srv`; you do not have to do any work in the Ubuntu-box.
+* In your browser, use `localhost:3838` to connect to the shiny servers. To edit your shiny project, use the mapped folder in `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server`; you do not have to do any work in the Ubuntu-box.
 * You can connect to shiny in your network, if the port 3838 is open. See the RStudio server installation instructions how to change the port.
 
 
 Running RStudio
 -------------
 
-* In your browser, use `localhost:8787` to connect to RStudio.  The user name is `shiny` and the password is also `shiny`. Your home directory map to `vagrant\rstudio-shiny-server-on-ubuntu\srv` in the host operating system (assumed Windows).
+* In your browser, use `localhost:8787` to connect to RStudio.  The user name is `shiny` and the password is also `shiny`. Your home directory map to `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server` in the host operating system (assumed Windows).
 
 Troubleshooting and additional info
 ------------------------------------
