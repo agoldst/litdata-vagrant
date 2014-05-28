@@ -20,7 +20,7 @@ class update_system {
     ->
     package {['software-properties-common','libapparmor1',
               'python-software-properties', 
-              'python', 'g++', 'make','vim', 'whois',
+              'python', 'g++', 'make','vim', 'whois','mc','libcairo2-dev',
               'default-jdk', 'gdebi-core', 'libcurl4-gnutls-dev']:
       ensure  => present,
     }
