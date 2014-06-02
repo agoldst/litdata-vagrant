@@ -19,6 +19,7 @@ class update_system {
     }
     ->
     package {['software-properties-common','libapparmor1',
+              'haskell-platform',
               'python-software-properties', 
               'python', 'g++', 'make','vim', 'whois','mc','libcairo2-dev',
               'default-jdk', 'gdebi-core', 'libcurl4-gnutls-dev']:
@@ -37,6 +38,23 @@ class update_system {
       provider => shell,
       command  =>'apt-get -y upgrade',
     }
+    ->
+    exec {'update-haskell':
+      provider =>shell,
+      command =>'cabal update',
+    }
+    ->
+    exec {'install-pandoc': 
+      provider =>shell,
+      command =>'cabal install pandoc pandoc-citeproc',
+      timeout     => 1800,
+    }
+    ->
+    exec {'addpandoctopath':
+      provider =>shell,
+      command => 'ln -s $HOME/.cabal/bin/* /usr/local/bin',
+    }
+    
     ->
     # Install host additions (following https://www.virtualbox.org/manual/ch04.html
     # this must be done after upgrading.
@@ -106,7 +124,7 @@ class install_shiny_server {
         provider => shell,
         command => 'usermod -p `mkpasswd -H md5 shiny` shiny',
      }
-
+    ->
     # Remove standard app
     file {'/srv/shiny-server/index.html':
         ensure => absent,
