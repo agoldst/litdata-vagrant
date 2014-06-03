@@ -1,5 +1,5 @@
 include wget
-
+# Installs RStudio (user shiny, password shiny) and Shiny
 # Change these if the version changes
 # See http://www.rstudio.com/ide/download/server
 $rstudioserver = 'rstudio-server-0.98.507-amd64.deb'
@@ -19,8 +19,8 @@ class update_system {
     }
     ->
     package {['software-properties-common','libapparmor1',
-              'haskell-platform',
               'python-software-properties', 
+              'haskell-platform',
               'python', 'g++', 'make','vim', 'whois','mc','libcairo2-dev',
               'default-jdk', 'gdebi-core', 'libcurl4-gnutls-dev']:
       ensure  => present,
@@ -39,29 +39,31 @@ class update_system {
       command  =>'apt-get -y upgrade',
     }
     ->
-    exec {'update-haskell':
-      provider =>shell,
-      command =>'cabal update',
-    }
-    ->
-    exec {'install-pandoc': 
-      provider =>shell,
-      command =>'cabal install pandoc pandoc-citeproc',
-      timeout     => 1800,
-    }
-    ->
-    exec {'addpandoctopath':
-      provider =>shell,
-      command => 'ln -s $HOME/.cabal/bin/* /usr/local/bin',
-    }
-    
-    ->
     # Install host additions (following https://www.virtualbox.org/manual/ch04.html
     # this must be done after upgrading.
     package {'dkms':
         ensure => present,
+    }    
+    ->
+    exec { "update-cabal":
+      command => "/usr/bin/cabal update",
+      unless => "/usr/bin/test -f /root/.cabal/packages/hackage.haskell.org/00-index.tar.gz";
+    }
+    -> # We need a more recent version of pandoc
+    exec {'update-haskell':
+      provider =>shell,
+      command =>'cabal update',
+      unless => "test -f /root/.cabal/packages/hackage.haskell.org/00-index.tar.gz";
+    }
+    ->
+    exec {'install-pandoc': 
+      provider =>shell,
+      timeout => 1800,
+      command =>'cabal install --global pandoc pandoc-citeproc',
+      unless => "test -f /root/.cabal/packages/hackage.haskell.org/pandoc"
     }
 }
+
 
 # Install r base and packages
 class install_r {
@@ -120,6 +122,7 @@ class install_shiny_server {
     }   
     ->
    # Setting password during user creation does not work    
+   # Password shiny is public; this is for local use only
    exec {'shinypassword':
         provider => shell,
         command => 'usermod -p `mkpasswd -H md5 shiny` shiny',
@@ -159,6 +162,9 @@ class check_services{
         hasstatus => true,
     }
 }
+
+
+
 
 include update_system
 include install_r
