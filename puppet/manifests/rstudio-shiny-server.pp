@@ -11,8 +11,7 @@ $getshiny = "wget -nc http://download3.rstudio.org/ubuntu-12.04/x86_64/${shinyse
 
 
 # Update system for r install
-class update_system {
-    
+class update_system {   
     exec {'apt_update':
         provider => shell,
         command  => 'apt-get update;',
@@ -20,6 +19,7 @@ class update_system {
     ->
     package {['software-properties-common','libapparmor1',
               'python-software-properties', 
+              'upstart','dbus-x11', # required for init-checkconf
               'haskell-platform',
               'python', 'g++', 'make','vim', 'whois','mc','libcairo2-dev',
               'default-jdk', 'gdebi-core', 'libcurl4-gnutls-dev']:
@@ -96,7 +96,6 @@ class install_shiny_server {
     exec {'shiny-server-install':
         provider => shell,
         command  => "gdebi -n ${shinyserver}",
-        onlyif => "status shiny-server",
     }
 
     ->    
@@ -153,11 +152,11 @@ class install_rstudio_server {
 
 # Make sure that both services are running
 class check_services{
-#    service {'shiny-server':
-#        ensure    => running,
-#        require   => Exec['shiny-server-install'],
-#        hasstatus => true,
-#    }
+    service {'shiny-server':
+        ensure    => running,
+        require   => User['shiny'],
+        hasstatus => true,
+    }
     service {'rstudio-server':
         ensure    => running,
         require   => Exec['rstudio-server-install'],
@@ -165,6 +164,18 @@ class check_services{
     }
 }
 
+class startupscript{
+    file { '/etc/init/makeshinylinks.sh':
+       require   => Service['shiny-server'],
+       ensure => 'link',
+       target => '/vagrant/makeshinylinks.sh',
+    }
+ ->
+    exec{ 'reboot-makeshiny-links':
+       provider  => shell,
+       command   => '/vagrant/makeshinylinks.sh',
+    }  
+}
 
 
 
@@ -174,4 +185,5 @@ include install_shiny_server
 include install_shiny_server
 include install_rstudio_server
 include check_services
+include startupscript
 

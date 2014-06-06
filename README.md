@@ -42,6 +42,7 @@ Running Shiny
 
 * In your browser, use `localhost:3838` to connect to the shiny servers. To edit your shiny project, use the mapped folder in `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server`; you do not have to do any work in the Ubuntu-box.
 * You can connect to shiny in your network, if the port 3838 is open. See the RStudio server installation instructions how to change the port.
+* On each system start, a script checks if there are new user-installed shiny applications in the `vagrant/R` path, and creates links to these displayed in the index page when shiny is started. When you install a new application with Shiny apps, these are only visible in the index after a `vagrant reload`. The script tries to find a useful name, avoiding the ubiquitous `shiny` for display in the index page.
 
 
 Running RStudio
