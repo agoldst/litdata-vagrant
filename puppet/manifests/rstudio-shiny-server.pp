@@ -88,13 +88,15 @@ class install_shiny_server {
         require  => [Exec['install-r-packages'],
                     Package['software-properties-common',
                     'python-software-properties', 'g++']],
-        command  => $getshiny
+        command  => $getshiny,
+        unless => "test -f ${shinyserver}",
     }
     ->
     # Install shiny server
     exec {'shiny-server-install':
         provider => shell,
         command  => "gdebi -n ${shinyserver}",
+        onlyif => "status shiny-server",
     }
 
     ->    
@@ -106,7 +108,7 @@ class install_shiny_server {
   # http://www.pindi.us/blog/getting-started-puppet
     user {'shiny':
         ensure  => present,
-        groups   => ['rstudio_users'],
+        groups   => ['rstudio_users', 'vagrant'], # adding to vagrant required for startup
         shell   => '/bin/bash',
         managehome => true,
         name    => 'shiny',
@@ -114,8 +116,8 @@ class install_shiny_server {
     }   
     ->
     # Copy example shiny files
-    file {'/srv/shiny-server':
-        source  => '/usr/local/lib/R/site-library/shiny/examples',
+    file {'/srv/shiny-server/01_hello':
+        source  => '/usr/local/lib/R/site-library/shiny/examples/01_hello',
         owner   => 'shiny',
         ensure  => 'directory',
         recurse => true,
@@ -151,11 +153,11 @@ class install_rstudio_server {
 
 # Make sure that both services are running
 class check_services{
-    service {'shiny-server':
-        ensure    => running,
-        require   => Exec['shiny-server-install'],
-        hasstatus => true,
-    }
+#    service {'shiny-server':
+#        ensure    => running,
+#        require   => Exec['shiny-server-install'],
+#        hasstatus => true,
+#    }
     service {'rstudio-server':
         ensure    => running,
         require   => Exec['rstudio-server-install'],
