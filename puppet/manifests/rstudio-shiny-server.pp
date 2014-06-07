@@ -96,6 +96,11 @@ class install_shiny_server {
         command  => $getshiny,
         unless => "test -f ${shinyserver}",
     }
+    ->    
+    # Create rstudio_users group
+    group {'rstudio_users':
+        ensure => present,
+    }
     ->
     # http://www.pindi.us/blog/getting-started-puppet
     user {'shiny':
@@ -106,11 +111,6 @@ class install_shiny_server {
         name    => 'shiny',
         home    => '/srv/shiny-server',
     }   
-    ->    
-    # Create rstudio_users group
-    group {'rstudio_users':
-        ensure => present,
-    }
     ->
     # Install shiny server
     exec {'shiny-server-install':
@@ -170,10 +170,10 @@ class check_services{
 }
 
 class startupscript{
-    file { '/etc/init/makeshinylinks.sh':
-       require   => Service['shiny-server'],
+    file { '/etc/init/makeshinylinks.conf':
+       require   => Exec['shinypassword'],
        ensure => 'link',
-       target => '/vagrant/makeshinylinks.sh',
+       target => '/vagrant/makeshinylinks.conf',
     }
  ->
     exec{ 'reboot-makeshiny-links':

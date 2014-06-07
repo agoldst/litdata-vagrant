@@ -24,10 +24,10 @@ Installation Instructions
 
 All commands starting with _vagrant_ should be given on the command line (i.e. the _black box_ in Windows).  If the command `vagrant` fails, please add the path to the directory with `vagrant.exe` to the  PATH environment variable.
 
-This installation has been tested with Oracle VirtualBox, version 4.3.8 on a Windows 7/64 host; and Vagrant 1.5.4. Note that this is NOT the current version of VirtualBox. There is a major issue with synchronized folders in Virtual Box 4.3.10; see  [here](http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest) and [here](https://github.com/mitchellh/vagrant/issues/3341); __do not use this version__. I will update this file when 4.3.11. is out and hopefully debugged. .
+This installation has been tested with Oracle VirtualBox, version 4.3.8 and with 4.3.12 on a Windows 7/64 host; and Vagrant 1.5.4. There is a major issue with synchronized folders in Virtual Box 4.3.10; see  [here](http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest) and [here](https://github.com/mitchellh/vagrant/issues/3341); __do not use this version__. 
 
 
-* Install [Oracle Virtual Box](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3). __Use version 4.3.8__, not the current version 4.3.10.
+* Install [Oracle Virtual Box](https://www.virtualbox.org/wiki/Downloads). Do not use version 4.3.10!
 * Install [Vagrant](http://www.vagrantup.com/downloads.html); best install it into folder `D:\vagrant` or `C:\vagrant` to avoid the `HashiCorp`-super-folder. 
 * Optional: If you want to create snapshots of your virtual machine, install the plugin: `vagrant plugin install vagrant-vbox-snapshot`.
 * Install Virtual Box Guest Additions: `vagrant plugin install vagrant-vbguest`; this step is tricky, please consult [vbguest](https://github.com/dotless-de/vagrant-vbguest) in case of errors. If everything fails, install the guest additions manually.
@@ -51,6 +51,12 @@ Running RStudio
 -------------
 
 * In your browser, use `localhost:8787` to connect to RStudio.  The user name is `shiny` and the password is also `shiny`. Your home directory map to `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server` in the host operating system (assumed Windows).
+
+Installing packages
+-------------------
+* Use RStudio to install packages from the CRAN server; see the RStudio documentation for details.
+* To install from a local source package (`xxx.tar.gz`), copy the file to `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server`, and use the package installation (Packages/Install/Install from: Package archive). 
+* If the installed package has a Shiny app, after a `vagrant reload` the app will be listed on the home page of Shiny; see file `makeshinylinks.sh` how this magic happens on system reboot. You only have to do the reload once after installation of a new packages, not after installing updates.
 
 Well-known bug
 ------------------------------------
