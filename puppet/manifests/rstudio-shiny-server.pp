@@ -97,19 +97,7 @@ class install_shiny_server {
         unless => "test -f ${shinyserver}",
     }
     ->
-    # Install shiny server
-    exec {'shiny-server-install':
-        provider => shell,
-        command  => "gdebi -n ${shinyserver}",
-    }
-
-    ->    
-    # Create rstudio_users group
-    group {'rstudio_users':
-        ensure => present,
-    }
-    ->
-  # http://www.pindi.us/blog/getting-started-puppet
+    # http://www.pindi.us/blog/getting-started-puppet
     user {'shiny':
         ensure  => present,
         groups   => ['rstudio_users', 'vagrant'], # adding to vagrant required for startup
@@ -118,6 +106,17 @@ class install_shiny_server {
         name    => 'shiny',
         home    => '/srv/shiny-server',
     }   
+    ->    
+    # Create rstudio_users group
+    group {'rstudio_users':
+        ensure => present,
+    }
+    ->
+    # Install shiny server
+    exec {'shiny-server-install':
+        provider => shell,
+        command  => "gdebi -n ${shinyserver}",
+    }
     ->
     # Copy example shiny files
     file {'/srv/shiny-server/01_hello':
