@@ -17,6 +17,8 @@ A vagrant-package does not contain the virtual machine and the installation, but
 
 All feature described here have only been tested with Windows as the host operating system.
 
+No attempts have been made to create a secure installation; passwords are well-known (`vagrant/vagrant` and `shiny/shiny`).
+
 Installation Instructions
 ------------
 
@@ -49,6 +51,11 @@ Running RStudio
 -------------
 
 * In your browser, use `localhost:8787` to connect to RStudio.  The user name is `shiny` and the password is also `shiny`. Your home directory map to `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server` in the host operating system (assumed Windows).
+
+Well-known bug
+------------------------------------
+
+* The Shiny server sometimes does not start on reload  since `/etc/shiny-server//shiny-server.conf` was not found (or is not accessible). This problem is being investigated, but an explicit `vagrant provision` or `vagrant up --provision` can be used as a workaround.
 
 Troubleshooting and additional info
 ------------------------------------

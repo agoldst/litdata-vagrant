@@ -2,8 +2,13 @@ include wget
 # Installs RStudio (user shiny, password shiny) and Shiny
 # Change these if the version changes
 # See http://www.rstudio.com/ide/download/server
-$rstudioserver = 'rstudio-server-0.98.507-amd64.deb'
-$getrstudio = "wget -nc http://download2.rstudio.org/${rstudioserver}"
+# This is the standard installation (update it when a new release comes out)
+# $rstudioserver = 'rstudio-server-0.98.507-amd64.deb'
+# $getrstudio = "wget -nc http://download2.rstudio.org/${rstudioserver}"
+
+# A more recent daily build
+$rstudioserver = 'rstudio-server-0.98.907-amd64.deb'
+$getrstudio = "wget -nc https://s3.amazonaws.com/rstudio-dailybuilds/${rstudioserver}"
 
 # See http://www.rstudio.com/shiny/server/install-opensource
 $shinyserver = 'shiny-server-1.1.0.10000-amd64.deb'
@@ -141,7 +146,8 @@ class install_rstudio_server {
     exec {'rstudio-server-download':
         require  => Package['r-base'],
         provider => shell,
-        command  => $getrstudio
+        command  => $getrstudio,
+        unless => "test -f ${rstudioserver}",
     }
     ->
     exec {'rstudio-server-install':
