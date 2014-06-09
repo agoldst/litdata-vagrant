@@ -7,6 +7,13 @@ This is an extended and code-rewritten version of:
 https://github.com/leondutoit/shiny-server-on-ubuntu
 
 
+Well-known bug
+------------------------------------
+
+* The Shiny server sometimes does not start on reload  since `/etc/shiny-server//shiny-server.conf` was not found (or is not accessible). This problem is being investigated (https://groups.google.com/d/msg/shiny-discuss/NKI3CVNhkxU/5D5mA1BiZNwJ), 
+but an explicit `vagrant provision` or `vagrant up --provision` can be used as a workaround.
+
+
 Why
 ---
 
