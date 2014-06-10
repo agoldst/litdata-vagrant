@@ -22,7 +22,7 @@ With vagrant (http://www.vagrantup.com/), the installation and configuration of 
 
 A vagrant-package does not contain the virtual machine and the installation, but rather the rules to construct one. Therefore, it is a small download, about 15kB zipped.
 
-All feature described here have only been tested with Windows as the host operating system.
+All features described here have only been tested with Windows as the host operating system.
 
 No attempts have been made to create a secure installation; passwords are well-known (`vagrant/vagrant` and `shiny/shiny`).
 
@@ -53,6 +53,16 @@ Running Shiny
 * You can connect to shiny in your network, if the port 3838 is open. See the RStudio server installation instructions how to change the port.
 * On each system start, a script checks if there are new user-installed shiny applications in the `vagrant/R` path, and creates links to these displayed in the index page when shiny is started. When you install a new application with Shiny apps, these are only visible in the index after a `vagrant reload`. The script tries to find a useful name, avoiding the ubiquitous `shiny` for display in the index page.
 
+If you create report via pandoc in Shiny, for running in shiny-server the following is required:
+````
+# https://groups.google.com/d/msg/shiny-discuss/LP15mqTvRWk/sCVR64JTOUYJ
+if (!nzchar(Sys.getenv("RSTUDIO_PANDOC")))
+  Sys.setenv(RSTUDIO_PANDOC = "/usr/lib/rstudio-server/bin/pandoc")
+# and possibly also the following: 
+if (Sys.getenv("HOME") =="")
+  Sys.setenv(HOME="/srv/shiny-server")
+```` 
+
 
 Running RStudio
 -------------
@@ -65,10 +75,7 @@ Installing packages
 * To install from a local source package (`xxx.tar.gz`), copy the file to `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server`, and use the package installation (Packages/Install/Install from: Package archive). 
 * If the installed package has a Shiny app, after a `vagrant reload` the app will be listed on the home page of Shiny; see file `makeshinylinks.sh` how this magic happens on system reboot. You only have to do the reload once after installation of a new packages, not after installing updates.
 
-Well-known bug
-------------------------------------
 
-* The Shiny server sometimes does not start on reload  since `/etc/shiny-server//shiny-server.conf` was not found (or is not accessible). This problem is being investigated, but an explicit `vagrant provision` or `vagrant up --provision` can be used as a workaround.
 
 Troubleshooting and additional info
 ------------------------------------

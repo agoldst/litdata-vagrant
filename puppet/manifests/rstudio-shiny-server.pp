@@ -25,7 +25,6 @@ class update_system {
     package {['software-properties-common','libapparmor1',
               'python-software-properties', 
               'upstart','dbus-x11', # required for init-checkconf
-              'haskell-platform',
               'python', 'g++', 'make','vim', 'whois','mc','libcairo2-dev',
               'default-jdk', 'gdebi-core', 'libcurl4-gnutls-dev']:
       ensure  => present,
@@ -49,24 +48,6 @@ class update_system {
     package {'dkms':
         ensure => present,
     }    
-    ->
-    exec { "update-cabal":
-      command => "/usr/bin/cabal update",
-      unless => "/usr/bin/test -f /root/.cabal/packages/hackage.haskell.org/00-index.tar.gz";
-    }
-    -> # We need a more recent version of pandoc
-    exec {'update-haskell':
-      provider =>shell,
-      command =>'cabal update',
-      unless => "test -f /root/.cabal/packages/hackage.haskell.org/00-index.tar.gz";
-    }
-    ->
-    exec {'install-pandoc': 
-      provider =>shell,
-      timeout => 1800,
-      command =>'cabal install --global pandoc pandoc-citeproc',
-      unless => "test -f /root/.cabal/packages/hackage.haskell.org/pandoc"
-    }
 }
 
 
