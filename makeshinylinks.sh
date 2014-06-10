@@ -12,7 +12,7 @@ for i in $( find "/vagrant/shiny-server/R" -name "server.R" ); do
       break
     fi
   done
-  target="/vagrant/shiny-server/""${array[$i]}"
+  target="/vagrant/shiny-server/""${array[$i]}""_Shiny"
   if [ ! -L $target ]; then
     eval "ln -s " "$dn " $target
   fi

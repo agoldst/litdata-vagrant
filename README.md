@@ -10,8 +10,7 @@ https://github.com/leondutoit/shiny-server-on-ubuntu
 Well-known bug
 ------------------------------------
 
-* The Shiny server sometimes does not start on reload  since `/etc/shiny-server//shiny-server.conf` was not found (or is not accessible). This problem is being investigated (https://groups.google.com/d/msg/shiny-discuss/NKI3CVNhkxU/5D5mA1BiZNwJ), 
-but an explicit `vagrant provision` or `vagrant up --provision` can be used as a workaround.
+* The Shiny server does not start on reload because of `/etc/shiny-server//shiny-server.conf` was not found (or is not accessible). This problem is being investigated (https://groups.google.com/d/msg/shiny-discuss/NKI3CVNhkxU/5D5mA1BiZNwJ), but an explicit `vagrant provision` or `vagrant up --provision` can be used as a workaround. 
 
 
 Why
@@ -63,6 +62,7 @@ if (Sys.getenv("HOME") =="")
   Sys.setenv(HOME="/srv/shiny-server")
 ```` 
 
+It is not required when running the app with `shiny::runApp()`. Currently (June 2014), it is not known whether it is a bug or a feature.
 
 Running RStudio
 -------------
