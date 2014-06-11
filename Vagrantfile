@@ -37,7 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision :puppet,
 #    :options => ["--verbose", "--debug"] do |puppet|
 #    :options => ["--debug"] do |puppet|
-    :options => [] do |puppet|
+     :options => [] do |puppet|
         puppet.manifests_path = "puppet/manifests"
         puppet.manifest_file = "rstudio-shiny-server.pp"
         puppet.module_path = "puppet/modules"

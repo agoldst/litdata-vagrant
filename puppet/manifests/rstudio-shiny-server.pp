@@ -4,16 +4,15 @@ include wget
 # See http://www.rstudio.com/ide/download/server
 # This is the standard installation (update it when a new release comes out)
 # $rstudioserver = 'rstudio-server-0.98.507-amd64.deb'
-# $getrstudio = "wget -nc http://download2.rstudio.org/${rstudioserver}"
+# $urlrstudio = "http://download2.rstudio.org/"
 
 # A more recent daily build
-$rstudioserver = 'rstudio-server-0.98.907-amd64.deb'
-$getrstudio = "wget -nc https://s3.amazonaws.com/rstudio-dailybuilds/${rstudioserver}"
+$rstudioserver = 'rstudio-server-0.98.919-amd64.deb'
+$urlrstudio = 'https://s3.amazonaws.com/rstudio-dailybuilds/'
 
 # See http://www.rstudio.com/shiny/server/install-opensource
-$shinyserver = 'shiny-server-1.1.0.10000-amd64.deb'
-$getshiny = "wget -nc http://download3.rstudio.org/ubuntu-12.04/x86_64/${shinyserver}"
-
+$shinyserver = 'shiny-server-1.2.0.355-amd64.deb'
+$urlshiny = 'https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/'
 
 # Update system for r install
 class update_system {   
@@ -24,7 +23,8 @@ class update_system {
     ->
     package {['software-properties-common','libapparmor1',
               'python-software-properties', 
-              'upstart','dbus-x11', # required for init-checkconf
+              'upstart',
+              'dbus-x11', # required for init-checkconf
               'python', 'g++', 'make','vim', 'whois','mc','libcairo2-dev',
               'default-jdk', 'gdebi-core', 'libcurl4-gnutls-dev']:
       ensure  => present,
@@ -67,15 +67,14 @@ class install_r {
 
 # Download and install shiny server and add users
 class install_shiny_server {
-
     # Download shiny server
-    exec {'shiny-server-download':
-        provider => shell,
+    wget::fetch {'shiny-server-download':
         require  => [Exec['install-r-packages'],
                     Package['software-properties-common',
                     'python-software-properties', 'g++']],
-        command  => $getshiny,
-        unless => "test -f ${shinyserver}",
+        destination => "${shinyserver}",
+        timeout  => 300,
+        source   => "${urlshiny}${shinyserver}",
     }
     ->    
     # Create rstudio_users group
@@ -123,11 +122,11 @@ class install_shiny_server {
 # install rstudio and start service
 class install_rstudio_server {
     # Download rstudio server
-    exec {'rstudio-server-download':
+    wget::fetch {'rstudio-server-download':
         require  => Package['r-base'],
-        provider => shell,
-        command  => $getrstudio,
-        unless => "test -f ${rstudioserver}",
+        timeout  => 0,
+        destination => "${rstudioserver}",
+        source  => "${urlrstudio}${rstudioserver}",
     }
     ->
     exec {'rstudio-server-install':
@@ -167,7 +166,6 @@ class startupscript{
 
 include update_system
 include install_r
-include install_shiny_server
 include install_shiny_server
 include install_rstudio_server
 include check_services
