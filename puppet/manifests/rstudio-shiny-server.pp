@@ -14,6 +14,9 @@ $urlrstudio = 'https://s3.amazonaws.com/rstudio-dailybuilds/'
 $shinyserver = 'shiny-server-1.2.0.355-amd64.deb'
 $urlshiny = 'https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/'
 
+#$urlshiny = 'http://download3.rstudio.org/ubuntu-12.04/x86_64/'
+#$shinyserver = 'shiny-server-1.1.0.10000-amd64.deb'
+
 # Update system for r install
 class update_system {   
     exec {'apt_update':
@@ -139,12 +142,12 @@ class install_rstudio_server {
 class check_services{
     service {'shiny-server':
         ensure    => running,
-        require   => User['shiny'],
+        require   => [User['shiny'], Exec['shiny-server-install']],
         hasstatus => true,
     }
     service {'rstudio-server':
         ensure    => running,
-        require   => Exec['rstudio-server-install'],
+        require   => [User['shiny'], Exec['rstudio-server-install']],
         hasstatus => true,
     }
 }
