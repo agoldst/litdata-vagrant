@@ -17,6 +17,23 @@ $urlshiny = 'https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04
 #$urlshiny = 'http://download3.rstudio.org/ubuntu-12.04/x86_64/'
 #$shinyserver = 'shiny-server-1.1.0.10000-amd64.deb'
 
+#http://projects.puppetlabs.com/projects/puppet/wiki/Simple_Text_Patterns/7
+define line($file, $line, $ensure = 'present') {
+    case $ensure {
+        default : { err ( "unknown ensure value ${ensure}" ) }
+        present: {
+            exec { "/bin/echo '${line}' >> '${file}'":
+                unless => "/bin/grep -qFx '${line}' '${file}'"
+            }
+        }
+        absent: {
+            exec { "/usr/bin/perl -ni -e 'print unless /^\\Q${line}\\E\$/' '${file}'":
+                onlyif => "/bin/grep -qFx '${line}' '${file}'"
+            }
+        }
+    }
+}
+
 # Update system for r install
 class update_system {   
     exec {'apt_update':
@@ -99,6 +116,16 @@ class install_shiny_server {
     exec {'shiny-server-install':
         provider => shell,
         command  => "gdebi -n ${shinyserver}",
+    }
+    -> # Make sure it's UTF-8 in shiny-server.conf (!!!! remove this later )
+    exec {'makeutf':
+      provider =>shell,
+      command  => 'sed -i "s/\'C\'/\'en_US.UTF-8\'/" /etc/init/shiny-server.conf'
+    }
+    ->
+   line { 'add-sleep':
+    file => '/etc/init/shiny-server.conf',
+    line => 'post-stop exec sleep 5',
     }
     ->
     # Copy example shiny files
