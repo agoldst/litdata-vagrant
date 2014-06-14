@@ -10,12 +10,15 @@ include wget
 $rstudioserver = 'rstudio-server-0.98.919-amd64.deb'
 $urlrstudio = 'https://s3.amazonaws.com/rstudio-dailybuilds/'
 
-# See http://www.rstudio.com/shiny/server/install-opensource
-$shinyserver = 'shiny-server-1.2.0.355-amd64.deb'
-$urlshiny = 'https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/'
-
+# This is the standard version, but there are restart problems and 
+# problems with language locales
 #$urlshiny = 'http://download3.rstudio.org/ubuntu-12.04/x86_64/'
 #$shinyserver = 'shiny-server-1.1.0.10000-amd64.deb'
+
+# See http://www.rstudio.com/shiny/server/install-opensource
+$shinyserver = 'shiny-server-1.2.0.358-amd64.deb'
+$urlshiny = 'https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/'
+
 
 #http://projects.puppetlabs.com/projects/puppet/wiki/Simple_Text_Patterns/7
 define line($file, $line, $ensure = 'present') {
@@ -117,17 +120,6 @@ class install_shiny_server {
         provider => shell,
         command  => "gdebi -n ${shinyserver}",
     }
-    -> # Make sure it's UTF-8 in shiny-server.conf (!!!! remove this later )
-    exec {'makeutf':
-      provider =>shell,
-      command  => 'sed -i "s/\'C\'/\'en_US.UTF-8\'/" /etc/init/shiny-server.conf'
-    }
-    ->
-   line { 'add-sleep':
-    file => '/etc/init/shiny-server.conf',
-    line => 'post-stop exec sleep 5',
-    }
-    ->
     # Copy example shiny files
     file {'/srv/shiny-server/01_hello':
         source  => '/usr/local/lib/R/site-library/shiny/examples/01_hello',

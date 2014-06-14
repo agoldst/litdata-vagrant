@@ -6,6 +6,7 @@ This is an extended and code-rewritten version of:
 
 https://github.com/leondutoit/shiny-server-on-ubuntu
 
+Thanks to Joe Cheng, Yihui Xie, and Jeff Allen for resolving problem with language locales (and all the other RStudio/Shiny stuff, evidently).
 
 Why
 ---
@@ -35,7 +36,7 @@ This installation has been tested with Oracle VirtualBox, version 4.3.8 and with
 * When you have `git` installed, clone the project into this subfolder: `git clone git@bitbucket.org:dmenne/rstudio-shiny-server-on-ubuntu.git`.
 * When you do not have `git` installed, [download the zip file](https://bitbucket.org/dmenne/rstudio-shiny-server-on-ubuntu/downloads/rstudio-shiny-server-on-ubuntu.zip) and unzip it into the `\vagrant\rstudio-shiny-server-on-ubuntu` directory. Note that the zip file may be a few revisions behind the git version.
 * Open a Command Window in the repository folder, e.g `cd \vagrant\rstudio-shiny-server-on-ubuntu`; this is the folder that contains a file named `Vagrantfile`.
-* Run: `vagrant up` from the command line in this directory; this will need some time on the first start, because all packages are downloaded. Come back after an hour or a night.
+* Run: `vagrant up` from the command line in this directory; this will need some time on the first start, because all packages are downloaded. With a good Internet connection, the first installation will need about 40 minutes, or 20 minutes when the Ubuntu box has been cached.
 * If there are no errors, continue running Shiny or RStudio. If there are errors, read below "Troubleshooting and additional info"
 
 
