@@ -47,17 +47,6 @@ Running Shiny
 * You can connect to shiny in your network, if the port 3838 is open. See the RStudio server installation instructions how to change the port.
 * On each system start, a script checks if there are new user-installed shiny applications in the `vagrant/R` path, and creates links to these displayed in the index page when shiny is started. When you install a new application with Shiny apps, these are only visible in the index after a `vagrant reload`. The script tries to find a useful name, avoiding the ubiquitous `shiny` for display in the index page.
 
-If you create report via pandoc in Shiny, for running in shiny-server the following is required:
-````
-# https://groups.google.com/d/msg/shiny-discuss/LP15mqTvRWk/sCVR64JTOUYJ
-if (!nzchar(Sys.getenv("RSTUDIO_PANDOC")))
-  Sys.setenv(RSTUDIO_PANDOC = "/usr/lib/rstudio-server/bin/pandoc")
-# and possibly also the following: 
-if (Sys.getenv("HOME") =="")
-  Sys.setenv(HOME="/srv/shiny-server")
-```` 
-
-It is not required when running the app with `shiny::runApp()`. Currently (June 2014), it is not known whether it is a bug or a feature.
 
 Running RStudio
 -------------
