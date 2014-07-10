@@ -4,12 +4,12 @@ include wget
 # See http://www.rstudio.com/ide/download/server
 # This is the standard installation (update it when a new release comes out)
 # A more recent daily build
-$rstudioserver = 'rstudio-server-0.98.932-amd64.deb'
+$rstudioserver = 'rstudio-server-0.98.953-amd64.deb'
 $urlrstudio = 'https://s3.amazonaws.com/rstudio-dailybuilds/'
 
 # See http://www.rstudio.com/shiny/server/install-opensource
-$shinyserver = 'shiny-server-1.2.0.358-amd64.deb'
-$urlshiny = 'https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/'
+$shinyserver = 'shiny-server-1.2.0.359-amd64.deb'
+$urlshiny = 'http://download3.rstudio.org/ubuntu-12.04/x86_64/'
 
 
 #http://projects.puppetlabs.com/projects/puppet/wiki/Simple_Text_Patterns/7
@@ -38,7 +38,7 @@ class update_system {
     ->
     package {['software-properties-common','libapparmor1',
               'python-software-properties', 
-              'upstart',
+              'upstart', 'psmisc',
               'dbus-x11', # required for init-checkconf
               'python', 'g++', 'make','vim', 'whois','mc','libcairo2-dev',
               'default-jdk', 'gdebi-core', 'libcurl4-gnutls-dev']:

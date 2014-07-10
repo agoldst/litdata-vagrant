@@ -1,11 +1,8 @@
 options("repos"="http://cran.rstudio.com") # set the cran mirror
 
-packages = c("devtools","ggplot2","plyr","reshape2","stringr","gridExtra",
+packages = c("devtools","ggplot2","plyr","reshape2","RcppEigen", "stringr","gridExtra",
              "RCurl","RJSONIO","RJDBC","knitr","lme4","latticeExtra",
              "XLConnect","Cairo")
-logfile = "/tmp/installedRpackages.log"
-unlink(logfile)
-sink(logfile)
 packages = setdiff(packages, installed.packages()[,"Package"])
 if (length(packages) != 0){
   (install.packages(packages, dep=c("Depends", "Imports")))
@@ -22,5 +19,4 @@ devtools::install_github(ghpackages)
 #if (nrow(ghPack) != 0){
 #  (devtools::install_github(apply(ghPack,1,paste,collapse="/")))
 #}             
-(update.packages(ask=FALSE))
-sink(NULL)
+update.packages(ask=FALSE)

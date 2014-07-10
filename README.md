@@ -30,8 +30,6 @@ This installation has been tested with Oracle VirtualBox, version 4.3.8 and with
 
 * Install [Oracle Virtual Box](https://www.virtualbox.org/wiki/Downloads). Do not use version 4.3.10!
 * Install [Vagrant](http://www.vagrantup.com/downloads.html); best install it into folder `D:\vagrant` or `C:\vagrant` to avoid the `HashiCorp`-super-folder. 
-* Optional: If you want to create snapshots of your virtual machine, install the plugin: `vagrant plugin install vagrant-vbox-snapshot`.
-* Install Virtual Box Guest Additions: `vagrant plugin install vagrant-vbguest`; this step is tricky, please consult [vbguest](https://github.com/dotless-de/vagrant-vbguest) in case of errors. If everything fails, install the guest additions manually.
 * Create a subfolder of `\vagrant`; we assumed it is called `\vagrant\rstudio-shiny-server-on-ubuntu`, but you can choose any name you like.
 * When you have `git` installed, clone the project into this subfolder: `git clone git@bitbucket.org:dmenne/rstudio-shiny-server-on-ubuntu.git`.
 * When you do not have `git` installed, [download the zip file](https://bitbucket.org/dmenne/rstudio-shiny-server-on-ubuntu/downloads/rstudio-shiny-server-on-ubuntu.zip) and unzip it into the `\vagrant\rstudio-shiny-server-on-ubuntu` directory. Note that the zip file may be a few revisions behind the git version.
