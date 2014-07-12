@@ -55,6 +55,7 @@ class update_system {
     -> 
     exec {'upgrade-system':
       provider => shell,
+	timeout => 2000, # On slow machines, this needs some time
       command  =>'apt-get -y upgrade',
     }
     ->
@@ -75,7 +76,7 @@ class install_r {
     ->
     exec {'install-r-packages':
         provider => shell,
-        timeout  => 1200,
+        timeout  => 3000,
         command  => 'Rscript /vagrant/usefulpackages.R'
     }
 }
@@ -165,12 +166,13 @@ class check_services{
 
 class startupscript{
     file { '/etc/init/makeshinylinks.conf':
-       require   => Exec['shinypassword'],
+       require   => [Service['shiny-server'], Exec['shinypassword']],
        ensure => 'link',
        target => '/vagrant/makeshinylinks.conf',
     }
  ->
     exec{ 'reboot-makeshiny-links':
+       #require   => File['/vagrant/makeshinylinks.sh'],
        provider  => shell,
        command   => '/vagrant/makeshinylinks.sh',
     }  
