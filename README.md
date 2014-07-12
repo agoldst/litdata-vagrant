@@ -6,7 +6,7 @@ This is an extended and code-rewritten version of:
 
 https://github.com/leondutoit/shiny-server-on-ubuntu
 
-Thanks to Joe Cheng, Yihui Xie, and Jeff Allen for resolving problem with language locales (and all the other RStudio/Shiny stuff, evidently).
+Thanks to Joe Cheng, Yihui Xie, and Jeff Allen for resolving problem with language locales and upstart delays on virtual machines; and all the other RStudio/Shiny stuff, evidently.
 
 Why
 ---
