@@ -41,9 +41,9 @@ This installation has been tested with Oracle VirtualBox, version 4.3.8 and with
 Running Shiny 
 -------------
 
-* In your browser, use `localhost:3838` to connect to the shiny servers. To edit your shiny project, use the mapped folder in `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server`; you do not have to do any work in the Ubuntu-box.
-* You can connect to shiny in your network, if the port 3838 is open. See the RStudio server installation instructions how to change the port.
-* On each system start, a script checks if there are new user-installed shiny applications in the `vagrant/R` path, and creates links to these displayed in the index page when shiny is started. When you install a new application with Shiny apps, these are only visible in the index after a `vagrant reload`. The script tries to find a useful name, avoiding the ubiquitous `shiny` for display in the index page.
+* In your browser, use `localhost:3838` to connect to the Shiny servers. To edit your Shiny project, use the mapped folder in `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server`; you do not have to do any work in the Ubuntu-box.
+* You can connect to Shiny in your network, if the port 3838 is open. See the RStudio server installation instructions how to change the port.
+* On each system start, a script checks if there are new user-installed Shiny applications in the `vagrant/R` path, and creates links to these displayed in the index page when Shiny is started. When you install a new application with Shiny apps, these are only visible in the index after a `vagrant reload`. The script tries to find a useful name, avoiding the ubiquitous `shiny` for display in the index page.
 
 
 Running RStudio
@@ -51,7 +51,7 @@ Running RStudio
 
 * In your browser, use `localhost:8787` to connect to RStudio.  The user name is `shiny` and the password is also `shiny`. Your home directory map to `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server` in the host operating system (assumed Windows).
 
-Installing packages
+Installing R packages
 -------------------
 * Use RStudio to install packages from the CRAN server; see the RStudio documentation for details.
 * To install from a local source package (`xxx.tar.gz`), copy the file to `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server`, and use the package installation (Packages/Install/Install from: Package archive). 
@@ -64,7 +64,7 @@ Troubleshooting and additional info
 
 * If you see error messages, try again: `vagrant reload` and/or `vagrant provision`.  
 * When in doubt run: `vagrant destroy` followed by  `vagrant up`.
-* To connect to the Ubuntu system, use `vagrant ssh`;no password required. This is an insecure connection, intended to be used on a local machine only.
+* To connect to the Ubuntu system, use `vagrant ssh`; no password required. This is an insecure connection, and intended to be used on a local machine only. You must have SSH installed on your computer, e.g. from git or MinGW.
 * To re-run the installation of the R-related components, use `vagrant provision`
 * For more detailed debugging information, uncomment the line  `#:options => ["--verbose", "--debug"] do |puppet|` 
 in file `Vagrantfile` by removing the `#`and prepending a `# to `:options => [] do |puppet|``.
