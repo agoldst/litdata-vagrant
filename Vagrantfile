@@ -11,16 +11,14 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Set up the box
-    config.vm.box = "precise"
+    config.vm.box = "ubuntu/trusty64"
     config.vm.provider "virtualbox" do |v|
       v.memory = 2048
       v.cpus = 2
     end
-    # If box does not exist fetch it from this url
-    config.vm.box_url = "http://files.vagrantup.com/precise64.box"
     # To install from a local file uncomment the following after adjusting the path
     # Note the forward slashes used, even on Windows
-    # config.vm.box_url =  "file:///D:/vagrant/rstudio-shiny-server-on-ubuntu/precise/precise64.box"
+    # config.vm.box_url =  "file:///D:/vagrant/rstudio-shiny-server-on-ubuntu/trusty/trusty64.box"
     
     # Port forwarding
     config.vm.network "forwarded_port", guest: 3838, host: 3838

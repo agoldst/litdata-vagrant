@@ -3,12 +3,11 @@ include wget
 # Change these if the version changes
 # See http://www.rstudio.com/ide/download/server
 # This is the standard installation (update it when a new release comes out)
-# A more recent daily build
-$rstudioserver = 'rstudio-server-0.98.953-amd64.deb'
+$rstudioserver = 'rstudio-server-0.98.1028-amd64.deb'
 $urlrstudio = 'https://s3.amazonaws.com/rstudio-dailybuilds/'
 
 # See http://www.rstudio.com/shiny/server/install-opensource
-$shinyserver = 'shiny-server-1.2.0.359-amd64.deb'
+$shinyserver = 'shiny-server-1.2.1.362-amd64.deb'
 $urlshiny = 'http://download3.rstudio.org/ubuntu-12.04/x86_64/'
 
 
@@ -37,9 +36,11 @@ class update_system {
     }
     ->
     package {['software-properties-common','libapparmor1',
+              #'freetds-dev', 'freetds-bin','sqsh','tdsodbc','r-cran-rodbc', 
+              'libdbd-mysql', 'libmysqlclient-dev',
               'python-software-properties', 
               'upstart', 'psmisc',
-              'dbus-x11', # required for init-checkconf
+              #'dbus-x11', # required for init-checkconf
               'python', 'g++', 'make','vim', 'whois','mc','libcairo2-dev',
               'default-jdk', 'gdebi-core', 'libcurl4-gnutls-dev']:
       ensure  => present,
@@ -48,7 +49,7 @@ class update_system {
     exec {'add-cran-repository':
       provider => shell,
       command  =>
-      'add-apt-repository "deb http://cran.rstudio.com/bin/linux/ubuntu precise/";
+      'add-apt-repository "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/";
       apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9;
       apt-get update;',
     }
