@@ -9,7 +9,7 @@ if (length(packages) != 0){
 }
 
 # Packages from github are installed unconditionally
-ghpackages = c("trestletech/shinyTable","rstudio/rmarkdown","rstudio/shiny")
+ghpackages = c("rstudio/htmltools","trestletech/shinyTable","rstudio/rmarkdown","rstudio/shiny")
 devtools::install_github(ghpackages)
 #ghFrame = do.call(rbind, strsplit(ghpackages,"/"))
 
@@ -18,5 +18,5 @@ devtools::install_github(ghpackages)
 #
 #if (nrow(ghPack) != 0){
 #  (devtools::install_github(apply(ghPack,1,paste,collapse="/")))
-#}             
+#}
 update.packages(ask=FALSE)
