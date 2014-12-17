@@ -3,11 +3,11 @@ include wget
 # Change these if the version changes
 # See http://www.rstudio.com/ide/download/server
 # This is the standard installation (update it when a new release comes out)
-$rstudioserver = 'rstudio-server-0.98.1028-amd64.deb'
+$rstudioserver = 'rstudio-server-0.98.1091-amd64.deb'
 $urlrstudio = 'https://s3.amazonaws.com/rstudio-dailybuilds/'
 
 # See http://www.rstudio.com/shiny/server/install-opensource
-$shinyserver = 'shiny-server-1.2.1.362-amd64.deb'
+$shinyserver = 'shiny-server-1.2.3.368-amd64.deb'
 $urlshiny = 'http://download3.rstudio.org/ubuntu-12.04/x86_64/'
 
 
@@ -37,7 +37,7 @@ class update_system {
     ->
     package {['software-properties-common','libapparmor1',
               #'freetds-dev', 'freetds-bin','sqsh','tdsodbc','r-cran-rodbc', 
-              'libdbd-mysql', 'libmysqlclient-dev',
+              'libdbd-mysql', 'libmysqlclient-dev','libssl-dev',
               'python-software-properties', 
               'upstart', 'psmisc',
               #'dbus-x11', # required for init-checkconf
@@ -56,8 +56,8 @@ class update_system {
     -> 
     exec {'upgrade-system':
       provider => shell,
-	timeout => 2000, # On slow machines, this needs some time
-      command  =>'apt-get -y upgrade',
+	    timeout => 2000, # On slow machines, this needs some time
+      command  =>'apt-get -y upgrade;apt-get -y autoremove;',
     }
     ->
     # Install host additions (following https://www.virtualbox.org/manual/ch04.html
@@ -65,6 +65,19 @@ class update_system {
     package {'dkms':
         ensure => present,
     }    
+}
+
+class install_opencpu {
+    exec {'add-opencpu-repository':
+      provider => shell,
+      command  =>
+        'add-apt-repository ppa:opencpu/opencpu-1.4;
+         apt-get update;',
+     }
+    ->
+    package { 'opencpu' :
+      ensure => installed,
+    }
 }
 
 
@@ -183,6 +196,7 @@ class startupscript{
 
 include update_system
 include install_r
+include install_opencpu
 include install_shiny_server
 include install_rstudio_server
 include check_services

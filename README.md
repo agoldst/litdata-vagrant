@@ -25,10 +25,10 @@ Installation Instructions
 
 All commands starting with _vagrant_ should be given on the command line (i.e. the _black box_ in Windows).  If the command `vagrant` fails, please add the path to the directory with `vagrant.exe` to the  PATH environment variable.
 
-This installation has been tested with Oracle VirtualBox, version 4.3.8 and with 4.3.12 on a Windows 7/64 host; and Vagrant 1.5.4. There is a major issue with synchronized folders in Virtual Box 4.3.10; see  [here](http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest) and [here](https://github.com/mitchellh/vagrant/issues/3341); __do not use this version__. 
+This installation has been tested with Oracle VirtualBox, version 4.3.8, 4.3.12 and 4.3.20 on a Windows 7/64 host; and Vagrant 1.5.4. There is a major issue with synchronized folders in Virtual Box 4.3.10; see  [here](http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest) and [here](https://github.com/mitchellh/vagrant/issues/3341); __do not use this version__. 
 
 
-* Install [Oracle Virtual Box](https://www.virtualbox.org/wiki/Downloads). Do not use version 4.3.10!
+* Install [Oracle Virtual Box](https://www.virtualbox.org/wiki/Downloads). Do not use version 4.3.10! Last version successfully tested is 4.3.20.
 * Install [Vagrant](http://www.vagrantup.com/downloads.html); best install it into folder `D:\vagrant` or `C:\vagrant` to avoid the `HashiCorp`-super-folder. 
 * Create a subfolder of `\vagrant`; we assumed it is called `\vagrant\rstudio-shiny-server-on-ubuntu`, but you can choose any name you like.
 * When you have `git` installed, clone the project into this subfolder: `git clone git@bitbucket.org:dmenne/rstudio-shiny-server-on-ubuntu.git`.
@@ -50,6 +50,11 @@ Running RStudio
 -------------
 
 * In your browser, use `localhost:8787` to connect to RStudio.  The user name is `shiny` and the password is also `shiny`. Your home directory map to `vagrant\rstudio-shiny-server-on-ubuntu\shiny-server` in the host operating system (assumed Windows).
+
+Running OpenCPU
+---------------
+
+* The OpenCPU server is installed and redirected to port 8080 on the host. Try localhost:8080/ocpu. For details, see https://www.opencpu.org/ .
 
 Installing R packages
 -------------------
