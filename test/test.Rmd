@@ -1,0 +1,25 @@
+---
+title: Test File
+author: Test Author
+output: pdf_document
+---
+
+# Ordinary markdown code
+
+Ordinary *emphasized* **bolded** text.[^1]
+
+[^1]: Footnote already!
+
+1. List
+2. Items
+3. Hurrah!
+
+Inline code: two and two make `r 2 + 2`.
+
+# Plotting
+
+```{r test-figure}
+library(ggplot2)
+ggplot(mtcars,aes(disp,hp)) + geom_point()
+```
+
