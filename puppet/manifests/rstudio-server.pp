@@ -56,6 +56,13 @@ class install_r {
     }
 }
 
+class install_tex {
+    package { ['texlive-base', 'texlive-latex-recommended',
+               'texlive-fonts-recommended', 'texlive-latex-extra' ]:
+        ensure => present,
+    }
+}
+
 # install rstudio and start service
 class install_rstudio_server {
     # Download rstudio server
@@ -108,6 +115,7 @@ class check_services {
 
 include update_system
 include install_r
+include install_tex
 include install_rstudio_server
 include check_services
 
