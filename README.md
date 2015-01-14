@@ -2,19 +2,21 @@ This provides a self-contained virtual environment running R and RStudio. If you
 
 # Installation
 
+Requirements: this is meant to run on almost any system. However, you will need a substantial amount of RAM (4 GB) and disk space (5 GB).
+
 1. Install [Vagrant](https://www.vagrantup.com/downloads).
 2. Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
 3. Download [this repository as a zip archive]() and unzip it. Note the folder you unzip it into.
 4. Open a terminal (Windows calls this a "Command Window") and change to the folder from the last step. (Use the `cd` command.)
 5. Enter the command: `vagrant box add ubuntu/trusty64` and press Return.
-6. Enter the command: `vagrant up` and press Return. Now begins a long process of downloading and installing software. This will require a large amount of disk space and time to complete (on my machine, it took about 4.5GB and about an hour of downloading and installing). You will know it is finished when you get a new command prompt (and hopefully no error messages).
+6. Enter the command: `vagrant up` and press Return. Now begins a long process of downloading and installing software. This will require a large amount of disk space and time to complete (on my machine, it took about 5GB and about an hour of downloading and installing). You will know it is finished when you get a new command prompt (and hopefully no error messages).
 
 
 # Testing
 
 1. Open your web browser and visit `http://localhost:8787`. You should see an RStudio login screen. Enter username `vagrant` and password `vagrant` and log in. You should now see a four-paned RStudio window.
 1. Type the following command into the top-left pane (the R console): `source("/vagrant/test/test.R")` and press Return. You should see a few messages, and then a final message reading `Looks okay.`
-1. In RStudio's File menu, choose "Open." Enter the following path: "`/vagrant/test/test.pdf." A PDF file should open up in your web browser.
+1. In RStudio's File menu, choose "Open." Enter the following path: `/vagrant/test/test.pdf`. A PDF file should open up in your web browser. It should look like [this file](http://www.rci.rutgers.edu/~ag978/litdata/vagrant-test.pdf).
 1. Close the window. Click "Sign Out" on the upper right of the RStudio window.
 1. Enter `vagrant halt` and press Return.
 1. Check in the folder where you unzipped all these for a file called `test.pdf`. Open this file in Preview or Adobe Reader (it should be the same as before).
