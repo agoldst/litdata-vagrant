@@ -6,7 +6,7 @@ Requirements: this is meant to run on almost any system. However, you will need 
 
 1. Install [Vagrant](https://www.vagrantup.com/downloads).
 2. Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
-3. Download [this repository as a zip archive]() and unzip it. Note the folder you unzip it into.
+3. Download [this repository as a zip archive](https://github.com/agoldst/litdata-vagrant/archive/master.zip) and unzip it. Note the folder you unzip it into.
 4. Open a terminal (Windows calls this a "Command Window") and change to the folder from the last step. (Use the `cd` command.)
 5. Enter the command: `vagrant box add ubuntu/trusty64` and press Return.
 6. Enter the command: `vagrant up` and press Return. Now begins a long process of downloading and installing software. This will require a large amount of disk space and time to complete (on my machine, it took about 5GB and about an hour of downloading and installing). You will know it is finished when you get a new command prompt (and hopefully no error messages).
