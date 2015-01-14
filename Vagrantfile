@@ -4,27 +4,18 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
-# There is a major issue with synced folders in Virtual Box 4.3.10.
-# DO NOT USE THIS version
-# http://stackoverflow.com/questions/22717428/vagrant-error-failed-to-mount-folders-in-linux-guest
-# https://github.com/mitchellh/vagrant/issues/3341
-
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Set up the box
     config.vm.box = "ubuntu/trusty64"
     config.vm.provider "virtualbox" do |v|
-      v.memory = 1024
+      v.memory = 2048
       # v.cpus = 2
     end
-    # To install from a local file uncomment the following after adjusting the path
-    # Note the forward slashes used, even on Windows
-    # config.vm.box_url =  "file:///D:/vagrant/rstudio-shiny-server-on-ubuntu/trusty/trusty64.box"
     
     # Port forwarding
     # RStudio
     config.vm.network "forwarded_port", guest: 8787, host: 8787
 
-    config.vm.synced_folder  "etc/rstudio", "/etc/rstudio", create:true
     # add dummy to avoid "Could not retrieve fact fqdn"
     config.vm.hostname = "vagrant.example.com"
 
