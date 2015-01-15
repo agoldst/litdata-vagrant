@@ -3,6 +3,8 @@ include wget
 $rstudioserver = 'rstudio-server-0.98.1091-amd64.deb'
 $urlrstudio = 'http://download2.rstudio.org/'
 
+# $texpkgs = 'hyperref ifxetex ifluatex fixltx2e listings fancyvrb longtable booktabs ulem framed'
+
 # Update system for r install
 class update_system {   
     exec { 'apt_update':
@@ -45,9 +47,18 @@ apt-get update;',
 # Install r base and packages
 class install_r {
     package { ['r-base', 'r-base-dev']:
-      ensure  => present,
-      require => Package['dkms'],
+        ensure  => present,
+        require => Package['dkms'],
     }    
+    ->
+    group { 'rstudio_users':
+        ensure   => present,
+    }
+    ->
+    user { 'vagrant':
+        # for R package installs, need:
+        groups   => ['vagrant', 'rstudio_users', 'staff'],
+    }
     ->
     exec {'install-r-packages':
         provider => shell,
@@ -77,36 +88,30 @@ class install_rstudio_server {
         provider => shell,
         command  => "gdebi -n ${rstudioserver}",
     }
-    ->    
-    # Create rstudio_users group
-    group {'rstudio_users':
-        ensure => present,
+    ->
+    file { '/etc/rstudio/rsession.conf':
+        ensure => file,
+        mode => "a=r,u+w"
     }
-    ->
-    # http://www.pindi.us/blog/getting-started-puppet
-    user { 'litdata':
-        ensure  => present,
-        # adding to vagrant required for startup
-        groups   => ['rstudio_users', 'vagrant'],
-        shell   => '/bin/bash',
-        managehome => true,
-        name    => 'litdata',
-        home    => '/home/litdata',
-    }   
-    ->
+    # ->
+    # Create rstudio_users group
+    # group {'rstudio_users':
+    #     ensure => present,
+    # }
+    # ->
    # Setting password during user creation does not work    
-   # Password shiny is public; this is for local use only
-   exec { 'serverpass':
-        provider => shell,
-        command => 'usermod -p `mkpasswd -H md5 litdata` litdata',
-     }
+   # Password is public; this is for local use only
+   # exec { 'serverpass':
+   #      provider => shell,
+   #      command => 'usermod -p `mkpasswd -H md5 litdata` litdata',
+   #   }
 }
 
 # Make sure that both services are running
 class check_services {
     service {'rstudio-server':
         ensure    => running,
-        require   => [User['litdata'], Exec['rstudio-server-install']],
+        require   => [Exec['rstudio-server-install']],
         hasstatus => true,
     }
 }
