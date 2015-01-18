@@ -16,7 +16,7 @@ Requirements: this is meant to run on almost any system. However, you will need 
 
 1. Open your web browser and visit `http://localhost:8787`. You should see an RStudio login screen. Enter username `vagrant` and password `vagrant` and log in. You should now see a three-paned RStudio window.
 1. Type the following command into the left-side pane (the R console): `source("/vagrant/test/test.R")` and press Return. You should see a few messages, and then a final message reading `Looks okay.`
-1. In RStudio's File menu, choose "Open." Enter the following path: `/vagrant/test/test.pdf`. A PDF file should open up in your web browser. It should look like [this file](http://www.rci.rutgers.edu/~ag978/litdata/vagrant-test.pdf).
+1. In RStudio's File menu, choose "Open." Enter the following path: `/vagrant/test/test.pdf`. A PDF file should open up in your web browser. It should look like [this file](http://www.rci.rutgers.edu/~ag978/litdata/test-vagrant.pdf).
 1. Close the window. Click "Sign Out" on the upper right of the RStudio window.
 1. Enter `vagrant halt` and press Return.
 1. Check in the folder where you unzipped all these for a file called `test.pdf`. Open this file in Preview or Adobe Reader (it should be the same as before).
