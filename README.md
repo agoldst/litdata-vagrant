@@ -29,9 +29,6 @@ Before you can use RStudio in your web browser, you have to start the virtual ma
 
 When you are working in RStudio Server, your files live on the virtual machine's virtual hard drive. How do you get those files off the virtual machine and back to your regular hard drive so you can print them, e-mail them, back them up, etc.? The answer is that a special folder is *shared* between the virtual machine and your real hard drive. This is `/vagrant`. Any file you save there on the virtual machine will appear in the folder where you saved the `Vagrantfile`. The same process works in reverse.
 
-You'll find it convenient to create a subfolder of this file and use *that* as your usual working directory.
-
-
-
+Because `/vagrant` itself is cluttered with the files for running the vritual machine (`Vagrantfile`, etc.), you'll find it convenient to create a subfolder of this directory and use *that* as your usual working directory.
 
 This configuration is based on a repository by [Dieter Menne](https://bitbucket.org/dmenne/rstudio-shiny-server-on-ubuntu). I have also made use of work by [Lincoln Mullen](https://github.com/lmullen/vagrant-r-dev/).
