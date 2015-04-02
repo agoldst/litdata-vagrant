@@ -2,12 +2,15 @@ options("repos"="http://cran.rstudio.com") # set the cran mirror
 
 packages <- c("devtools",
               "ggplot2",
-              "reshape2",
+              "tidyr",
               "dplyr",
               "stringr",
               "rstudio",
               "knitr",
-              "rmarkdown")
+              "rmarkdown",
+              "XML",
+              "rJava",
+              "mallet")
 packages <- setdiff(packages, installed.packages()[, "Package"])
 if (length(packages) != 0){
   (install.packages(packages, dep=c("Depends", "Imports")))

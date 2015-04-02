@@ -18,7 +18,8 @@ class update_system {
         'python-software-properties',
         'upstart', 'psmisc',
         'python', 'g++', 'make','vim', 'whois','mc','libcairo2-dev',
-        'default-jdk', 'gdebi-core', 'libcurl4-gnutls-dev' ]:
+        'default-jdk', 'gdebi-core', 'libcurl4-gnutls-dev',
+        'libxml2-dev']:
         ensure  => present,
     }
     ->
