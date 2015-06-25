@@ -10,7 +10,11 @@ packages <- c("devtools",
               "rmarkdown",
               "XML",
               "rJava",
-              "mallet")
+              "mallet",
+              "igraph",
+              "SnowballC",
+              "NLP",
+              "openNLP")
 packages <- setdiff(packages, installed.packages()[, "Package"])
 if (length(packages) != 0){
   (install.packages(packages, dep=c("Depends", "Imports")))
