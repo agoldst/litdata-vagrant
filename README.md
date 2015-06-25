@@ -41,7 +41,7 @@ In case anyone wants to fork this repository for their own courses or other purp
 
 The machine is the `ubuntu/trusty64` box [on Atlas](https://atlas.hashicorp.com/ubuntu/boxes/trusty64), i.e. Ubuntu 14.04 (Trusty Tahr) for AMD64 architectures under the Virtualbox provider. I borrowed this choice from the repositories cited above. 
 
-The machine is configured with 2GB of RAM, which is fine for most pedagogical purposes. Some students will need to reduce this allocation before the VM can fit in their machine's physical RAM. Conversely, the matrices and arrays required for topic-modeling with MALLET consume a lot of RAM and may require a larger allocation. Edit the line in [Vagrantfile](Vagrantfile) reading
+The machine is configured with 2GB of RAM, which is fine for most pedagogical purposes. Some students will need to reduce this allocation before the VM can fit in their machine's physical RAM. Conversely, the matrices and arrays required for topic-modeling with MALLET consume a lot of RAM and may require a larger allocation. Edit the line in [Vagrantfile](Vagrantfile#L11) reading
 
 ````
       v.memory = 2048
@@ -81,4 +81,4 @@ In my Spring 2015 course, I did not have students rely exclusively on this VM. I
 Nonetheless, I can say that this setup has indeed been used by students on a variety of Mac and Windows machines. I would be very pleased to hear from anyone who makes use of any part of this repository (or any of my other online course materials). I can be reached at <andrew.goldstone@rutgers.edu>.
 
 Andrew Goldstone  
-July 2015
+June 2015
