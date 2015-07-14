@@ -17,7 +17,7 @@ packages <- c("devtools",
               "openNLP")
 packages <- setdiff(packages, installed.packages()[, "Package"])
 if (length(packages) != 0){
-  (install.packages(packages, dep=c("Depends", "Imports")))
+  (install.packages(packages))
 }
 devtools::install_github("agoldst/litdata")
 update.packages(ask=FALSE)
